@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+
+  # Web Server Service
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./src:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - app
+      - db
+
+  #Database Service
+  db:
+    image : mysql
+    container_name : mysql
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: penadminui
+      MYSQL_ROOT_PASSWORD: Psalm.27@135
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app-network
+
+  # Application Service
+  app:
+    container_name: pensionmanager
+    restart: unless-stopped
+    tty: true
+    build: 
+      context: ./php
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/var/www
+    ports:
+      - "9000:9000"
+    working_dir: /var/www
+    networks:
+      - app-network
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
