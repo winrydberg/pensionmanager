@@ -47,7 +47,7 @@ class User extends Authenticatable
 
 
     public function department(){
-        return $this->hasOne(Department::class, 'id');
+        return $this->belongsTo(Department::class,'department_id');
     }
 
     public function phoneno():Attribute {

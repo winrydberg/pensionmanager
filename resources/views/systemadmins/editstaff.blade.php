@@ -75,7 +75,7 @@
                             <select class="form-control" name="department_id">
                                 <option value="null" selected="selected" disabled>Select a Department</option>
                                 @foreach ($departments as $dept)
-                                    <option value="{{$dept->id}}" {{$dept->id == $staff_department->id ? 'selected="selected"' : ''}}>{{$dept->name}}</option>
+                                    <option value="{{$dept->id}}" {{$dept->id == $staff_department?->id ? 'selected="selected"' : ''}}>{{$dept->name}}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -9,14 +9,14 @@
 @section('contentone')
     <div class="row">
         @foreach ($schemes as $scheme)
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="info-box">
                   <span class="info-box-icon bg-success"><i class="far fa-folder-open"></i></span>
 
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="info-box-content">
-                          <span class="info-box-text" style="font-weight: bold;">{{$scheme->name.' - '.$scheme->tiertype}}
+                      <div class="info-box-content text-wrap">
+                          <span class="info-box-text" style="font-weight: bold; word-wrap: break-word;">{{$scheme->name.' - '.$scheme->tiertype}}
                           @if($scheme->claims_count > 0)
                              <span class="badge badge-danger" style="margin-left: 15px;">{{$scheme->claims_count}}</span>
                           @endif

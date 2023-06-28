@@ -46,7 +46,7 @@ Route::group(['middleware' => ['lisc']], function(){
 
 
     //shared authenticated routes WITH COMMON ROLES
-    Route::group(['middleware' => ['auth','role:system-admin|claim-entry|audit|accounting']], function () {
+    Route::group(['middleware' => ['auth','role:system-admin|claim-entry|audit|accounting|front-desk']], function () {
         Route::get('/dashboard',[DashboardController::class, 'index'])->name('home');
         Route::get('/search-claim', [ClaimController::class, 'searchClaim'])->name('search-claim');
         Route::get('/claims', [ClaimController::class, 'getClaims'])->name('get-claims');
@@ -85,8 +85,6 @@ Route::group(['middleware' => ['lisc']], function(){
         Route::get('/notifications', [NotificationsController::class, 'getUnreadNotifications'])->name('unread-notifications');
         Route::get('/read-notifications', [NotificationsController::class, 'getReadNotifications'])->name('read-notifications');
         Route::post('/mark-read', [NotificationsController::class, 'markeAsRead'])->name('mark-as-read');
-        Route::get('/processed-files', [ClaimController::class, 'processedFiles'])->name('processed-files');
-        Route::post('processed-files', [ClaimController::class, 'saveProcessedClaimFiles'])->name('save-processed-claim-files');
         Route::post('/edit-comment',[CommentController::class, 'updateComment'])->name('edit-comment');
         Route::post('/mark-validity-status', [CommentController::class, 'updateClaimValidityStatus'])->name('validity-status');
 
@@ -95,8 +93,14 @@ Route::group(['middleware' => ['lisc']], function(){
         Route::post('/update-fcm-token',[FCMController::class, 'updateFCMToken'])->name('update-fcm-token');
     });
 
-    //SYSTEM ADMIN AND CLAIM ENTRY ROLES ROUTES
     Route::group(['middleware' => ['auth','role:system-admin|claim-entry']], function () { 
+        Route::get('/processed-files', [ClaimController::class, 'processedFiles'])->name('processed-files');
+        Route::post('/processed-files', [ClaimController::class, 'saveProcessedClaimFiles'])->name('save-processed-claim-files');
+    });
+
+
+    //SYSTEM ADMIN AND CLAIM ENTRY ROLES ROUTES
+    Route::group(['middleware' => ['auth','role:system-admin|claim-entry|front-desk']], function () { 
         Route::get('/new-claim', [ClaimController::class, 'newClaim'])->name('new-claim');
         Route::get('claim-files', [ClaimController::class, 'claimFiles'])->name('claim-files');
         Route::post('claim-files', [ClaimController::class, 'saveClaimFiles'])->name('save-claim-files');
@@ -115,6 +119,7 @@ Route::group(['middleware' => ['lisc']], function(){
         Route::post('/new-scheme',[SchemeController::class, 'saveScheme'])->name('save-scheme');
         Route::get('/edit-staff',[StaffAccountController::class, 'editStaff'])->name('edit-staff');
         Route::post('/edit-staff',[StaffAccountController::class, 'saveNewStaffInfo'])->name('save-new-staff');
+        Route::post('/update-staff-account-state', [StaffAccountController::class, 'updateStaffAccountState']);
     });
 
     //SYSTEM ADMIN ROLES ROUTES

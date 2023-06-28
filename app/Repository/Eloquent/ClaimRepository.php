@@ -187,6 +187,7 @@ class ClaimRepository implements ClaimRepositoryInterface
          */
         public function createClaim(array $claimdetails): ?Model
         {
+        
             $user = Auth::user();
             $department = $user->department;
             $claim = Claim::create([
@@ -213,6 +214,7 @@ class ClaimRepository implements ClaimRepositoryInterface
             event(new NewPushNotificationEvent("New Claim", "A new claim has just been registered by".$user->firstname.". Claim ID: ".$claim->claimid, $claim->id));
 
             return $claim;
+        
         }
 
         /**
@@ -297,6 +299,8 @@ class ClaimRepository implements ClaimRepositoryInterface
                             }else{
                                 $excelfileError = true;
                             }
+                        }else{
+
                         }                      
                     }else{
                        
@@ -311,14 +315,11 @@ class ClaimRepository implements ClaimRepositoryInterface
                     }
                 }
 
-               
 
-                
-                
 
                 if($excelfileError == false){
                     $company = $claim->company;
-                     if($claim){
+                    if($claim){
                     $claim->update([
                             'processed' =>  $claimstate, //check to make sure uploaded files contain excel 
                             'claim_directory' => $this->claimPath,
@@ -349,7 +350,9 @@ class ClaimRepository implements ClaimRepositoryInterface
                     }
                 }else{
                     $claim->update([
-                        'processed' =>false
+                        'processed' =>false,
+                        'claim_directory' => $this->claimPath,
+                        'head_directory' => $this->claimPath,
                     ]);
                     return [
                         'status' => 'error',

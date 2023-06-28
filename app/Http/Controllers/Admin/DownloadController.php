@@ -69,10 +69,11 @@ class DownloadController extends Controller
                     return back();
                 }
             }catch(Exception $e){
-                return redirect()->back()->with('error', 'Unable to download files. Files Not Found');
                 Log::error('====================DOWNLOAD ERROR=========================');
                 Log::error($e->getMessage());
                 Log::error('====================DOWNLOAD ERROR=========================');
+                return redirect()->back()->with('error', 'Unable to download files. Files Not Found');
+               
             }
         }else{
             return redirect()->back()->with('error', 'Claim Not Found');

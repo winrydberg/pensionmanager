@@ -41,7 +41,7 @@ class ClaimDeleteListener
              ClaimFile::destroy($claimfilesIds);
              $customersIds = Customer::where('claim_id', $claim->id)->pluck('id');
              Customer::destroy($customersIds); 
-             File::deleteDirectory(storage_path('app/'.$claim->claim_directory));
+            //  File::deleteDirectory(storage_path('app/'.$claim->claim_directory));
              $claim->delete();
         }catch(Exception $e){
             Log::error($e);

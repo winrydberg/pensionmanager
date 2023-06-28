@@ -7,8 +7,9 @@
   <link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 
 <script>
+    var clmdetails = 0;
     function showModal(message, id){
-
+        clmdetails = id;
         $('#message').text(message);
         $('#modal-lg').modal({backdrop: 'static', keyboard: false});
 
@@ -25,6 +26,11 @@
         })
 
         // $('#modal-lg').modal({backdrop: 'static', keyboard: false})
+    }
+
+
+    function goToClaimDetails(){
+      window.location.href = "{{url('/claim-files?claimid=')}}"+clmdetails
     }
 
       
@@ -101,7 +107,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                 <a href="{{url('/claim?claimid='.$no->claim_id)}}" class="btn bg-purple">Claim Details</a>
+                 <button onclick="goToClaimDetails" class="btn bg-purple">Claim Details</button>
                 </div>
             </div>
         

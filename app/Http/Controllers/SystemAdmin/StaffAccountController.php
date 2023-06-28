@@ -116,4 +116,36 @@ class StaffAccountController extends Controller
             return back()->with('error', 'Opps something went wrong.Pleasetry again later');
         }
     }
+
+
+    public function updateStaffAccountState(Request $request){
+        try{
+            $staff = User::where('id', $request->id)->first();
+            if($staff){
+                $staff->update([
+                    'is_active' => $request->state
+                ]);
+                $message = 'Staff account successfully deactivated';
+                if($request->state ==1){
+                    $message = 'Staff account successfully activated';
+                }
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $message
+                ]);
+
+            }else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Staff account not found. Please refresh page and try again'
+                ]);
+            }
+        }catch(Exception $e){
+            Log::error($e);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unble to deactivate staff account. Please contact administrators'
+            ]);
+        }
+    }
 }

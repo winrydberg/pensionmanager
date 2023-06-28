@@ -84,10 +84,7 @@
                                         @foreach ($schemes as $scheme)
                                         <option
                                             value="{{$scheme->id}}"
-                                            {{request()-
-                                        >
-                                            query('schemeid')== $scheme->id ?
-                                            'selected="selected"': ''}}>{{$scheme->name.' - '. $scheme->tiertype}}
+                                            {{request()->query('schemeid')== $scheme->id ? 'selected="selected"': ''}}>{{$scheme->name.' - '. $scheme->tiertype}}
                                         </option>
                                         @endforeach
                                     </select>

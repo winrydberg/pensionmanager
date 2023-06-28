@@ -36,7 +36,7 @@
 
           
 
-          @hasanyrole('system-admin|claim-entry')
+          @hasanyrole('system-admin|claim-entry|front-desk')
           <li class="nav-header">CLAIM</li>
               <li class="nav-item">
                 <a href="{{url('new-claim')}}" class="nav-link {{request()->path() == 'new-claim' ? 'active': ''}}">
